@@ -19,7 +19,7 @@ def operaciones_conjuntos(DNI1, DNI2, DNI3):
     diferencia1 = conjunto1 - conjunto2
     diferencia2 = conjunto2 - conjunto3
     diferencia3 = conjunto3 - conjunto1
-    diferencia_simetrica = conjunto1 ^ conjunto2 ^ conjunto3
+    diferencia_simetrica = (union)-((conjunto1 & conjunto2) | (conjunto1 & conjunto3) | (conjunto2 & conjunto3))
 
     return {
         "union": union,
