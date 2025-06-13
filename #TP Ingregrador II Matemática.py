@@ -24,9 +24,9 @@ def operaciones_conjuntos(DNI1, DNI2, DNI3):
     return {
         "union": union,
         "interseccion": interseccion,
-        "diferencia1": diferencia1,
-        "diferencia2": diferencia2,
-        "diferencia3": diferencia3,
+        "diferencia1(1-2)": diferencia1,
+        "diferencia2(2-3)": diferencia2,
+        "diferencia3(3-1)": diferencia3,
         "diferencia_simetrica": diferencia_simetrica
     }
     
@@ -44,23 +44,38 @@ def contar_frecuencia(DNI):
 
 #sumar dígitos DNI
 def suma_digitos(DNI):
-    num = int(DNI)    
     suma=0
 
-    for digito in range (0, len(DNI)):
-        suma += digito
+    for digito in DNI:
+        suma += int(digito)
     
     return suma
   
+#expresión lógico N°1
+def diversidad_con_nucleo_comun(DNI1, DNI2, DNI3):
+    resultados = operaciones_conjuntos(DNI1, DNI2, DNI3)
+    union = resultados["union"]
+    interseccion = resultados["interseccion"]
 
+    if len(union) == 9 and len(interseccion) >= 3:
+        return True
+    else:
+        return False
 
+#expresión lógico N°2
+def predominancia_par_impar(DNI1, DNI2, DNI3):
+    resultados = operaciones_conjuntos(DNI1, DNI2, DNI3)
+    union = resultados["union"]
 
+    pares = {d for d in union if int(d) % 2 == 0}
+    impares = {d for d in union if int(d) % 2 != 0}
 
-
-
-
-
-
+    if len(pares) > len(impares):
+        return "Hay predominancia par"
+    elif len(impares) > len(pares):
+        return "Hay predominancia impar"
+    else:
+        return "Hay Equidad"
 
 
 
@@ -75,7 +90,11 @@ DNI3 = input("Intregrante N°3. Ingrese su número de DNI: ")
 print("Conjunto1:", generar_conjuntos(DNI1))
 print("Conjunto2:", generar_conjuntos(DNI2))
 print("Conjunto3:", generar_conjuntos(DNI3))
-print(operaciones_conjuntos(DNI1, DNI2, DNI3))
+
+operaciones = operaciones_conjuntos(DNI1, DNI2, DNI3)
+for clave, conjunto in operaciones.items():
+    print(f"{clave}: {conjunto}")
+
 
 frec1 = contar_frecuencia(DNI1)
 frec2 = contar_frecuencia(DNI2)
@@ -96,6 +115,12 @@ print(f"La suma de los dígitos del DNI1({DNI1}) es: {suma_digitos(DNI1)}")
 print(f"La suma de los dígitos del DNI2({DNI2}) es: {suma_digitos(DNI2)}")
 print(f"La suma de los dígitos del DNI3({DNI3}) es: {suma_digitos(DNI3)}")
 
+if diversidad_con_nucleo_comun(DNI1, DNI2, DNI3):
+    print("Se considera que hay diversidad con núcleo común")
+else:
+    print("No hay diversidad con núcleo común")
+
+print(predominancia_par_impar(DNI1, DNI2, DNI3))
 
 
 
@@ -122,12 +147,18 @@ def es_bisiesto(año):
     else:
         return False
 
+def producto_cartesiano(AÑO1, AÑO2, AÑO3):
+    años = {AÑO1, AÑO2, AÑO3}
+    edades = {2025-AÑO1, 2025-AÑO2, 2025-AÑO3}
+    producto_cartesiano = set()
 
+    for año in años:
+        for edad in edades:
+            producto_cartesiano.add((año, edad))
 
-
-
-
-
+    print("Producto cartesiano entre años y edades:")
+    for par in producto_cartesiano:
+        print(par)
 
 
 #  ==PROGRAMA PRINCIPAL==
@@ -146,7 +177,7 @@ if AÑO1>=2000 and AÑO2>=2000 and AÑO3>=2000:
 if es_bisiesto(AÑO1) or es_bisiesto(AÑO2) or es_bisiesto(AÑO3):
     print("Tenemos un año especial")
 
-
+producto_cartesiano(AÑO1, AÑO2, AÑO3)
 
 
 
